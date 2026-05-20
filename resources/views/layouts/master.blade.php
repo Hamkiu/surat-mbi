@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>SisSurat | @yield('title')</title>
+  <title>DBSurat@mbi | @yield('title')</title>
   <!--favicon-->
   <link rel="icon" href="{{ asset('template/assets/images/favicon-32x32.png') }}" type="image/png">
   <!-- loader-->
