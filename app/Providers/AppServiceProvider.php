@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Models\Models;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
-
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,19 +24,39 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
-
-        View::composer('*', function ($view) {
-
+    
+        view()->composer('*', function ($view) {
+    
             if (!Schema::hasTable('models')) {
                 return;
             }
+    
+            $query = Models::query();
+    
+            if (auth()->check()) {
+    
+                $user = auth()->user();
+    
+                if ($user->hasRole('Admin')) {
+    
+                    $query->whereIn('sub_components', [
+                        
+                        'dashboard'
+                    ]);
+    
+                } elseif ($user->hasRole('User')) {
+    
+                    $query->whereIn('sub_components', [
 
-            $models = Models::orderBy('component_no')
-                ->orderBy('sub_components_no')
-                ->get();
-
+                    ]);
+    
+                }
+    
+            }
+    
+            $models = $query->get();
             $components = $models->groupBy('components');
-
+    
             $view->with('components', $components);
         });
     }
