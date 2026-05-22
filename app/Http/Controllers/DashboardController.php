@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AuditTrail;
 use Illuminate\Http\Request;
 
-class AuditTrailController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('audittrail.index');
+        return view('dashboard');
     }
 
     /**
@@ -34,7 +33,7 @@ class AuditTrailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AuditTrail $auditTrail)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +41,7 @@ class AuditTrailController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AuditTrail $auditTrail)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +49,7 @@ class AuditTrailController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AuditTrail $auditTrail)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +57,7 @@ class AuditTrailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AuditTrail $auditTrail)
+    public function destroy(string $id)
     {
         //
     }
