@@ -26,4 +26,29 @@
         }
     }
 
+    if (!function_exists('auditTrail')) {
+        function auditTrail($action, $module, $component, $id, $name, $user_id, $forAuth = '') {
+            $audittrail = new \App\Models\AuditTrail();
+             // fallback: kalau $user_id tak diberi, ambil dari session
+            if (is_null($user_id)) {
+                $user_id = session('enakmen_user_id');   // ikut nama key session awak
+            }
+
+            $audittrail->audit_trail_id = generateId('AT','audit_trails','audit_trail_id');
+            $audittrail->audit_trail_module = $module;
+            $audittrail->audit_trail_component = $component;
+            $audittrail->audit_trail_action = $action;
+            $audittrail->audit_trail_data_id = $id;
+            $audittrail->audit_trail_data_name = $name;
+            $audittrail->audit_trail_desc = $action.' row '.$name.' with id '.$id.' on '.$component.' ('.$module.')';
+
+            if (!empty($forAuth) && $forAuth == 'y') {
+                $audittrail->audit_trail_desc = $name . ' with id ' .  $user_id . ' did ' .  $component;
+            }
+            
+            $audittrail->users_id = $user_id;
+            $audittrail->save();
+        }
+    }
+
 ?>
